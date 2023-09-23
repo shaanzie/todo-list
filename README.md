@@ -1,5 +1,32 @@
 # Todo List Exercise
 
+### Dependencies
+
+```
+Angular CLI: 16.2.3
+Node: 18.17.1
+Package Manager: npm 10.1.0
+@angular/animations": "^16.2.0",
+@angular/common": "^16.2.0",
+@angular/compiler": "^16.2.0",
+@angular/core": "^16.2.0",
+@angular/forms": "^16.2.0",
+"@angular/platform-browser": "^16.2.0",
+"@angular/platform-browser-dynamic": "^16.2.0",
+"@angular/router": "^16.2.0",
+springBootVersion=3.1.3
+mavenVersion=3.6.3
+```
+
+### Execution steps
+1. Install the dependencies based on the versions given above. All files are on Linux file endings, so there might be some compatibility issues with Windows line endings.
+2. Run `npm install` in workspace folder. There might be an issue with package installation due to an old or corrupted `package-lock.json` file. Please delete that before installing the required dependencies.
+3. Run TodoApplication as a JAR on one terminal, wait for successful start message. There might be an error of 'Database TODO does not exist'. In this case, open `todo-list-backend/src/main/resources/import.sql` and un-comment the 'CREATE TABLE TODO' command. Subsequent runs of the server must comment out this command. (TODO: Replace this with CREATE IF TABLE DOESNT EXIST or a similar primitive).
+4. On a new terminal, run `ng serve` and wait for successful compilation. Then, navigate to 'localhost:4200' to view the interface and interact as necessary. Errors are traditionally logged to console.
+
+## Assignment Readme section
+<hr>
+
 This is a small gradle based multi-project to test your familiarity with Angular frontend in general and Spring boot backend.
 The project consists of 2 modules `todo-list-frontend` and `todo-list-backend`.
 

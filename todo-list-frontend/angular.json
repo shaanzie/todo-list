@@ -91,6 +91,10 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "hmr": true,
+            "poll": 1
+          },
           "configurations": {
             "production": {
               "browserTarget": "todo-list:build:production"
@@ -110,5 +114,8 @@
       }
     }
   },
-  "defaultProject": "todo-list"
+  "defaultProject": "todo-list",
+  "cli": {
+    "analytics": "95a97e77-ae84-4d0d-9a2f-85df0b384134"
+  }
 }

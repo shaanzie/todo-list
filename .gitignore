@@ -48,3 +48,10 @@ Thumbs.db
 *.db
 *.jar
 *.sql
+*.lock
+*.bin
+.angular/
+node_modules/
+.vscode/
+build/
+package-lock.json
