@@ -1,6 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {Todo, TodoService} from "./todo.service";
-import {Observable} from "rxjs";
+import { Component, OnInit } from '@angular/core';
+import { Todo } from './todo'
+import { TodoService } from './todo.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -47,12 +48,14 @@ export class AppComponent implements OnInit  {
       (response: Todo[]) => {
         // Set the todos to be the todo return from the service
         this.todos = response;
+        // Update the Todos we have from the response
+        this.updateTodos(response);
         // Flag to tell search bar to disappear
         this.dataLoaded = true;
       },
-      (error) => {
+      (error: HttpErrorResponse) => {
         // Basic error checking
-        alert(error);
+        alert(error.message);
       }
     )
   }
@@ -71,12 +74,17 @@ export class AppComponent implements OnInit  {
     }
   }
 
+  // Update the todos list when the data is loaded
+   private updateTodos(todos: Todo[]): void {
+      this.todos = todos;
+   }
+
   // Remove function
   removeTodo(todo: Todo): void {
     // We show the progress bar again as the data is reloaded
     this.dataLoaded = false;
-    // Removes Todo based on the Todo's ID 
-    this.todoService.remove(todo.id).subscribe(
+    // Removes Todo based on the Todo clicked
+    this.todoService.remove(todo).subscribe(
       () => {
         // Refetch from the service, to ensure freshness and make sure race conditions are handled
         this.getTodos();
