@@ -14,7 +14,7 @@ import {Observable} from "rxjs";
       <label for="search">Search...</label>
       <input id="search" type="text" [(ngModel)]="filterText">
       <app-progress-bar *ngIf="!dataLoaded"></app-progress-bar>
-      <app-todo-item *ngFor="let todo of filteredTodos" [item]="todo"></app-todo-item>
+      <app-todo-item *ngFor="let todo of filteredTodos" [item]="todo" (click)="removeTodo(todo)"></app-todo-item>
     </div>
   `,
   styleUrls: ['app.component.scss']
@@ -69,6 +69,24 @@ export class AppComponent implements OnInit  {
         todo.task.toLowerCase().includes(searchText)
       );
     }
+  }
+
+  // Remove function
+  removeTodo(todo: Todo): void {
+    // We show the progress bar again as the data is reloaded
+    this.dataLoaded = false;
+    // Removes Todo based on the Todo's ID 
+    this.todoService.remove(todo.id).subscribe(
+      () => {
+        // Refetch from the service, to ensure freshness and make sure race conditions are handled
+        this.getTodos();
+      },
+      (error) => {
+        // Can be shown to the console, but is an alert to make sure the user sees it
+        alert('Error removing todo: ' + error);
+        console.error('Error removing todo: ', error);
+      }
+    );
   }
 
 }
