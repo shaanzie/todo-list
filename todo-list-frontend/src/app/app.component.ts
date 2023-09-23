@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Todo, TodoService} from "./todo.service";
 import {Observable} from "rxjs";
 
@@ -13,17 +13,46 @@ import {Observable} from "rxjs";
     <div class="list">
       <label for="search">Search...</label>
       <input id="search" type="text">
-      <app-progress-bar></app-progress-bar>
-      <app-todo-item *ngFor="let todo of todos$ | async" [item]="todo"></app-todo-item>
+      <app-progress-bar *ngIf="!dataLoaded"></app-progress-bar>
+      <app-todo-item *ngFor="let todo of todos" [item]="todo"></app-todo-item>
     </div>
   `,
   styleUrls: ['app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit  {
 
-  readonly todos$: Observable<Todo[]>;
+  // Not choosing to use todos as a readonly observable as updates can be held in an array that 
+  // UI takes updates from everytime an action occurs (to remove race conditions when concurrent actions occur)
+  // readonly todos$: Observable<Todo[]>;
 
-  constructor(todoService: TodoService) {
-    this.todos$ = todoService.getAll();
+  // Todos set to public to access them in different components
+  public todos: Todo[] = [];
+  // Variable set to flag whether data has been loaded or not
+  public dataLoaded = false;
+
+  // Moving constructor logic to an init function for ng startup
+  constructor(private todoService: TodoService) {}
+
+  // Runs when the NG server is initialized and starts prefetching Todos
+  ngOnInit(): void {
+    this.getTodos();
+}
+
+  // Function to retrieve todos from service
+  public getTodos(): void {
+    // Subscribe allows to asynchronously get the object
+    this.todoService.getAll().subscribe(
+      (response: Todo[]) => {
+        // Set the todos to be the todo return from the service
+        this.todos = response;
+        // Flag to tell search bar to disappear
+        this.dataLoaded = true;
+      },
+      (error) => {
+        // Basic error checking
+        alert(error);
+      }
+    )
   }
+
 }
