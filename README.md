@@ -22,7 +22,7 @@ mavenVersion=3.6.3
 1. Install the dependencies based on the versions given above. All files are on Linux file endings, so there might be some compatibility issues with Windows line endings.
 2. Run `npm install` in workspace folder. There might be an issue with package installation due to an old or corrupted `package-lock.json` file. Please delete that before installing the required dependencies.
 3. Run TodoApplication as a JAR on one terminal, wait for successful start message. There might be an error of 'Database TODO does not exist'. In this case, open `todo-list-backend/src/main/resources/import.sql` and un-comment the 'CREATE TABLE TODO' command. Subsequent runs of the server must comment out this command. (TODO: Replace this with CREATE IF TABLE DOESNT EXIST or a similar primitive).
-4. On a new terminal, run `ng serve` and wait for successful compilation. Then, navigate to 'localhost:4200' to view the interface and interact as necessary. Errors are traditionally logged to console.
+4. On a new terminal, run `ng serve` and wait for successful compilation. Then, navigate to 'localhost:4200' to view the interface and interact as necessary. Errors are traditionally logged to console. If there is a CORS error blocking requests to the server, change line 30 in TodoApplication.java to have the secure connection be "https://" instead of "http://". This varies from browser to browser.
 
 ## Assignment Readme section
 <hr>
